@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Booking Details Page</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<style>
+			.firstName ,.lastName , .emailID , .age , .passportNumber{
+						border-radius : 100px;
+						margin : 12px;
+						padding : 5px 50px 5px 50px;
+					}
+		.addButton , .deleteButton, .inputFieldEnableButton{
+									border-radius : 50px;
+									margin : 6px;
+									padding : 5px 50px 5px 50px;
+							}
+							
+							.delButton{
+								border-radius : 50px;
+								margin : 6px;
+								padding : 4px 10px 4px 10px;
+									}
+		.tableHeader{
+					margin-left:auto; 
+					margin-right:24.2%;
+					margin-top : 1%;
+					margin-bottom : -0.7%;
+					width :100%;
+					table-layout: fixed;
+					background-color : rgb(247, 228, 0);
+					display : none;
+					color: black;
+					text-align: center;
+										}
+		.tabelEntry {
+					margin-left:auto; 
+					margin-right:24.2%;
+					margin-top : 1%;
+					margin-bottom : 0%;
+					width :100%;
+					text-align: center;
+					table-layout: fixed;
+					color: rgb(247, 228, 0);
+					background-color: black;
+				}							
+		
+	</style>
+</head>
+<body>
+
+<div class="container text-center">
+	<div>
+		<form th:action="@{/logout}" method="post">
+			<p>
+				Welcome to passenger details page <b><span sec:authentication="principal.fullName"></span></b>
+			</p>
+		</form>
+		<a th:href="@{/logout_success}">Sign Out</a>
+	</div>
+	<div>
+		<h1>Booking Details Page</h1>
+	</div>
+	
+	<div>
+		<table class="table table-striped table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>Flight Code</th>
+					<th>Flight Name</th>
+					<th>Arrival City</th>
+					<th>Departure City</th>
+					<th>Number of available seats</th>
+					<th>Journey Start Time</th>
+					<th>Journey End Time</th>
+					<th>Price Per seat</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="flightCode" id="flightCode" th:text="${Individualflight.flightCode}">Flight Code</td>
+					<td th:text="${Individualflight.flightName}">Flight Name</td>
+					<td th:text="${Individualflight.ArrivalCity}">Arrival City</td>
+					<td th:text="${Individualflight.DepartureCity}">Departure City</td>
+					<td th:text="${Individualflight.NoOfSeatsAvailable}">Number of available seats</td>
+					<td th:text="${Individualflight.JourneyStartTime}">Journey Start Time</td>
+					<td th:text="${Individualflight.JourneyEndTime}">Journey End Time</td>
+					<td class="pricePerSeat" id="pricePerSeat" th:text="${Individualflight.PricePerSeat}">Price Per seat</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	 <!-- <div>
+		<div>
+			<div>
+				<table class="tableHeader"> 
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email ID</th>
+					<th>Age</th>
+					<th>Passport Number</th>
+					<th>Action</th>
+				</table>
+			</div>
+				<form th:action="@{/process_register_Passangerdetails}" th:object="${passenger}" method="post">
+			<div id="passengerDetails" class="addedpassengerDetailsContainer">
+			</div>
+			<div>
+				<button type="submit" class="btn btn-primary">Save Passanger Details</button> 
+			</div>
+			</form>  
+
+				<button class="inputFieldEnableButton" onclick="addNewPassengerDetailsInputRow()"> Enter Passanger details</button>
+						<div id="passengerDetailsFinal">
+						</div>
+		</div>
+	</div>
+	-->
+	<div><p> Number Passangers added : </p><div id="noOfPassengersAdded"></div></div>
+	<div><p>Total Price : </p><div id="totalPrice"></div></div>
+	<button class="inputFieldEnableButton" onclick="addNewPassengerDetailsInputRow()"> Enter Passanger details</button>
+	<form th:action="@{/process_register_Passangerdetails}" th:object="${passengerdetails}" method="post">						
+		<div id="passengerDetailsFinal">  </div>
+		<!--<input type="hidden" th:field="*{UserID}" /> -->
+		<input type="hidden" id="priceOfBooking" name="priceOfBooking" />
+		<input type="hidden" id="selectedFlightCode" name="selectedFlightCode"></input>
+		<div><button type="submit" class="btn btn-primary">Confirm Booking</button></Span>
+	</form>
+</div>
+
+<script>
+	const flightCodeDisplay = document.getElementById('flightCode');
+	var flightCodeDisplayValue = flightCodeDisplay.textContent || flightCodeDisplay.innerText;
+	document.getElementById('selectedFlightCode').value = flightCodeDisplayValue;
+	var lineBreak =$("<br>");
+	function addNewPassengerDetailsInputRow(){
+					var createDivForPassengerDetails = $("<div></div>").addClass("passengerDetailsDiv");
+					var createFirstNameInput = $("<input></input>").addClass("firstName").val("Enter First Name").attr("id","firstName").attr("name","firstName").attr("type","text");
+					var createLastNameInput = $("<input></input>").addClass("lastName").val("Enter Last Name").attr("id","lastName").attr("name","lastName").attr("type","text");
+					var createEmailIDInput = $("<input></input>").addClass("emailID").val("Enter email ID").attr("id","emailID").attr("name","emailID").attr("type","text");
+					var createAgeInput = $("<input></input>").addClass("age").val("Enter age").attr("id","age").attr("name","age").attr("type","text");
+					var createPassportNumberInput = $("<input></input>").addClass("passportNumber").val("Enter Passport Number").attr("id","passportNumber").attr("name","passportNumber").attr("type","text");
+					var createCustomerIDHiddenInput = $("<input></input>").addClass("customerIDHiddenInput").attr("id","UserID").attr("name","UserID").attr("type","hidden");
+					var createDeleteButton = $("<button></button>").addClass("deleteButton").text("Delete").on ("click", function(){
+						$(this).closest(('div')).remove();
+					});
+					var createAddButton = $("<button></button>").addClass("addButton").text("Add").on("click", function(){
+						$(".tableHeader").show();
+						var addFirstName = $(this).closest('div').find("input[class='firstName']");
+						var addLastName = $(this).closest('div').find("input[class='lastName']");
+						var addEmailID = $(this).closest('div').find("input[class='emailID']");
+						var addAge = $(this).closest('div').find("input[class='age']");
+						var addPassportNumber = $(this).closest('div').find("input[class='passportNumber']");
+						var addDivTag = $("<div></div>").addClass("addDivTags");
+						var deleteButton = $("<button></button>").addClass("delButton").text("Delete Passenger").on("click", function(){
+							$(this).closest('div').remove();
+						});
+						var tableCreation = $("<table></table>").addClass("tabelEntry");
+						var tableRowCreation = $("<tr></tr>").addClass("tabelRowEntry");
+						var tableColumnOneCreation = $("<td></td>").addClass("tabelColumnOneEntry").attr("id","firstName").attr("name","firstName");
+						var tableColumnTwoCreation = $("<td></td>").addClass("tabelColumnTwoEntry").attr("id","lastName").attr("name","lastName");
+						var tableColumnThreeCreation = $("<td></td>").addClass("tabelColumnThreeEntry").attr("id","emailID").attr("name","emailID");
+						var tableColumnFourCreation = $("<td></td>").addClass("tabelColumnFourEntry").attr("id","age").attr("name","age");
+						var tableColumnFiveCreation = $("<td></td>").addClass("tabelColumnFiveEntry").attr("id","passportNumber").attr("name","passportNumber");
+						var tableColumnSixCreation = $("<td></td>").addClass("tabelColumnFiveEntry");
+						//$("#passengerDetails").append(addDivTag.append(tableCreation.append(tableRowCreation.append(tableColumnOneCreation.append(addFirstName.val()),tableColumnTwoCreation.append(addLastName.val()) ,tableColumnThreeCreation.append(addEmailID.val()),tableColumnFourCreation.append(addAge.val()),tableColumnFiveCreation.append(addPassportNumber.val()),tableColumnSixCreation.append(deleteButton)))).append(lineBreak));
+					});
+					$("#passengerDetailsFinal").append(createDivForPassengerDetails.append(createFirstNameInput, createLastNameInput,createEmailIDInput ,createAgeInput,createPassportNumberInput,createCustomerIDHiddenInput,createDeleteButton));
+								
+				}
+				function countElementsWithClassName(className){
+					const passengerDetailsElement = document.getElementsByClassName(className);
+					return passengerDetailsElement.length;
+				}
+				
+				function displayCount(className){
+					const count = countElementsWithClassName(className);
+					const countDisplayDiv = document.getElementById('noOfPassengersAdded');
+					countDisplayDiv.textContent =count;
+					console.log(count);
+					const priceDisplay = document.getElementById('pricePerSeat');
+					var priceDisplayValue = priceDisplay.textContent || priceDisplay.innerText;
+					const totalPrice = count*priceDisplayValue;
+					const totalPriceDisplayDiv = document.getElementById('totalPrice');
+					totalPriceDisplayDiv.textContent =totalPrice;
+					var totalPriceFinal = totalPriceDisplayDiv.textContent;
+					document.getElementById("priceOfBooking").value = totalPriceFinal;
+				}
+
+				
+				const cutomerDetailsClassName='passportNumber';
+				
+				displayCount(cutomerDetailsClassName);
+				
+				const observer = new MutationObserver((mutations)=> {
+					mutations.forEach((mutation) => {
+						if(mutation.addedNodes.length || mutation.removedNodes.length){
+							displayCount(cutomerDetailsClassName);
+						}
+					});
+				});	
+				const config = {childList : true, subtree:true};
+								observer.observe(document.body,config);
+								
+								setTimeout(()=> {
+									const newElement = document.createElement('div');
+									newElement.className = "Test";
+									document.body.appendChild(newElement);
+								},2000);
+								
+								setTimeout(()=> {
+									const anotherElement = document.createElement('div');
+									newElement.className = cutomerDetailsClassName;
+									document.body.appendChild(anotherElement);
+								},4000);		
+</script>
+</body>
+</html>

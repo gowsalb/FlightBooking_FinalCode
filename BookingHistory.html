@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Booking Successfully completed</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container text-center">
+		
+		<div>
+				<form th:action="@{/logout}" method="post">
+					<p>
+						Hi, <b><span sec:authentication="principal.fullName"></span></b> Your Booking Successfully completed
+					</p>
+				</form>
+				<a th:href="@{/logout_success}">Sign Out</a>
+			</div>
+		<h5> Booking History</h5>
+		<div>
+			<table class="table table-striped table-bordered">
+						<thead class="thead-dark">
+							<tr>
+								<th>Booking ID</th>
+								<th>Flight Name</th>
+								<th>Flight Code</th>
+								<th>Arrival City</th>
+								<th>Departure City</th>
+								<th>Passanger first Name</th>
+								<th>Passanger Last Name</th>
+								<th>Journey Start Time</th>
+								<th>Journey End Time</th>
+								<th>Booking Price</th>
+								<th>Booking Status</th>
+								<th>Cancel/Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="passengers: ${listPassengers}">
+								<td th:text="${passengers.BookingID}">Flight Code</td>
+								<td th:text="${passengers.flight.flightName}">Flight Name</td>
+								<td th:text="${passengers.flight.flightCode}">Flight Code</td>
+								<td th:text="${passengers.flight.ArrivalCity}">Arrival City</td>
+								<td th:text="${passengers.flight.DepartureCity}">Departure City</td>
+								<td th:text="${passengers.firstName}">Passanger first Name</td>
+								<td th:text="${passengers.lastName}">Passanger Last Name</td>
+								<td th:text="${passengers.flight.JourneyStartTime}">Journey Start Time</td>
+								<td th:text="${passengers.flight.JourneyEndTime}">Journey End Time</td>
+								<td th:text="${passengers.priceOfBooking}">Price Per seat</td>
+								<td th:text="${passengers.BookingStatus}">Booking Status</td>
+								<td><a type="button">Cancel Booking</a></td>
+							</tr>
+						</tbody>
+					</table>
+			
+		</div>
+		<form th:action="@{/users}" method="get">
+			<button type="submit">Return to Flight Listing</button>
+		</form>
+		
+		<form th:action="@{/BookingHistory}" method="get">
+					<button type="submit">Return to Top</button>
+		</form>
+	</div>
+	
+</body>
+</html>

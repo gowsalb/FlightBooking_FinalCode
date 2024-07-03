@@ -1,10 +1,12 @@
-CREATE TABLE Users(
+
+CREATE TABLE users(
 	ID serial primary key,
-	Name varchar(150) not null,
-	Email varchar(200) unique not null,
+	first_name varchar(150) not null,
+    last_name varchar(150) not null,
+	email varchar(200) unique not null,
 	Password varchar(150) not null,
   Role VARCHAR(255)
-)
+);
 
 CREATE TABLE Flights (
 ID serial primary key,

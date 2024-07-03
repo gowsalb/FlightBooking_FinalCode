@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>List Users</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+	<div>
+		<form th:action="@{/logout}" method="post">
+			<p>
+				Welcome <b><span sec:authentication="principal.fullName"></span></b>
+			</p>
+		</form>
+		<a th:href="@{/logout_success}">Sign Out</a>
+		<div> <a th:href="@{/BookingHistory}">Booking History</a> </div>
+	</div>
+	<div>
+		<h1>List of Flights</h1>
+	</div>
+	
+	<div>
+		<table class="table table-striped table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>Flight Code</th>
+					<th>Flight Name</th>
+					<th>Arrival City</th>
+					<th>Departure City</th>
+					<th>Number of available seats</th>
+					<th>Journey Start Time</th>
+					<th>Journey End Time</th>
+					<th>Price Per seat</th>
+					<th>Booking Option</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="flight: ${listFlight}">
+					<td th:text="${flight.flightCode}">Flight Code</td>
+					<td th:text="${flight.flightName}">Flight Name</td>
+					<td th:text="${flight.ArrivalCity}">Arrival City</td>
+					<td th:text="${flight.DepartureCity}">Departure City</td>
+					<td th:text="${flight.NoOfSeatsAvailable}">Number of available seats</td>
+					<td th:text="${flight.JourneyStartTime}">Journey Start Time</td>
+					<td th:text="${flight.JourneyEndTime}">Journey End Time</td>
+					<td th:text="${flight.PricePerSeat}">Price Per seat</td>
+					<td><a type="button" th:href="@{/PassangerCount(flightCode=${flight.flightCode})}">Book Now</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

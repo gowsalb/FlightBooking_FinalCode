@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Booking cancelled</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container text-center">
+		
+		<div>
+				<form th:action="@{/logout}" method="post">
+					<p>
+						Hi, <b><span sec:authentication="principal.fullName"></span></b> You have successfully cancelled your booking
+					</p>
+				</form>
+				<a th:href="@{/logout_success}">Sign Out</a>
+			</div>
+		<h3>Your Booking ID is <span th:text="${bookingID}"></span></h3>
+		<h5> Passenger List</h5>
+		<ul>
+			<li th:each="pasangers : ${passengerList}"> 
+				First Name :<span th:text="${pasangers.firstName}" ></span>,
+				Last Name :<span th:text="${pasangers.lastName}" ></span>
+			</li>
+		</ul>
+		<form th:action="@{/users}" method="get">
+			<button type="submit">Return to Flight Listing</button>
+		</form>
+		
+		<form th:action="@{/BookingHistory}" method="get">
+					<button type="submit">Booking History</button>
+		</form>
+	</div>
+	
+</body>
+</html>

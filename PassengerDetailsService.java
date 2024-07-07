@@ -52,5 +52,10 @@ public class PassengerDetailsService{
 				}
 			return BookingidBuilder.toString(); 
 		} 
+	public List<Passangers> updateBookingStatus(String bookingID, String bookingNewStatus) { 
+		List<Passangers> passengers = PassangerDetailsRepo.findByBookingID(bookingID);
+		passengers.forEach(passenger -> passenger.setBookingStatus(bookingNewStatus));
+		return PassangerDetailsRepo.saveAll(passengers);
+		}
 	
 }

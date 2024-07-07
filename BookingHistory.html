@@ -50,7 +50,7 @@
 								<td th:text="${passengers.flight.JourneyEndTime}">Journey End Time</td>
 								<td th:text="${passengers.priceOfBooking}">Price Per seat</td>
 								<td th:text="${passengers.BookingStatus}">Booking Status</td>
-								<td><a type="button">Cancel Booking</a></td>
+								<td><a type="button" th:href="@{/CancelBookingSuccess(BookingID=${passengers.BookingID},selectedFlightCode=${passengers.flight.flightCode})}">Cancel Booking</a></td>
 							</tr>
 						</tbody>
 					</table>

@@ -176,4 +176,16 @@ public class AppController {
 		return "BookingHistory";
 	}
 
+	@GetMapping("/CancelBookingSuccess")
+	public String CancelBookingSuccess(@RequestParam("BookingID") String bookingID,@RequestParam("selectedFlightCode") int selectedFlightCode, Model model) {
+		String BookingStatus = "Cancelled";
+		passengerDetailsService.updateBookingStatus(bookingID,BookingStatus);
+		List<Passangers> passengers =passengerDetailsService.getAllpassengersByBookingID(bookingID);
+		int noOfPassengersTaggedToBookingID = passengers.size();
+		int newAvailableSeats = flightDetailsService.getFlightByFlightCode(selectedFlightCode).getNoOfSeatsAvailable() + noOfPassengersTaggedToBookingID;
+		flightDetailsService.updateAvailableSeats(selectedFlightCode, newAvailableSeats);
+		flightDetailsService.updateAvailableSeats(selectedFlightCode, newAvailableSeats);
+        return "CancelBookingSuccess";
+    }
+
 }

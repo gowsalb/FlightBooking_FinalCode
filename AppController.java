@@ -184,7 +184,6 @@ public class AppController {
 		int noOfPassengersTaggedToBookingID = passengers.size();
 		int newAvailableSeats = flightDetailsService.getFlightByFlightCode(selectedFlightCode).getNoOfSeatsAvailable() + noOfPassengersTaggedToBookingID;
 		flightDetailsService.updateAvailableSeats(selectedFlightCode, newAvailableSeats);
-		flightDetailsService.updateAvailableSeats(selectedFlightCode, newAvailableSeats);
         return "CancelBookingSuccess";
     }
 

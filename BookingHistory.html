@@ -6,6 +6,13 @@
 	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
 	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<style>
+		.disabled{
+			cursor: not-allowed;
+			pointer-events: none;
+			color: rgb(255, 84, 32);
+		}
+	</style>
 </head>
 <body>
 	<div class="container text-center">
@@ -50,7 +57,7 @@
 								<td th:text="${passengers.flight.JourneyEndTime}">Journey End Time</td>
 								<td th:text="${passengers.priceOfBooking}">Price Per seat</td>
 								<td th:text="${passengers.BookingStatus}">Booking Status</td>
-								<td><a type="button" th:href="@{/CancelBookingSuccess(BookingID=${passengers.BookingID},selectedFlightCode=${passengers.flight.flightCode})}">Cancel Booking</a></td>
+								<td><a type="button" th:href="@{/CancelBookingSuccess(BookingID=${passengers.BookingID},selectedFlightCode=${passengers.flight.flightCode})}" th:classappend="${passengers.BookingStatus=='Cancelled'} ? 'disabled' :''">Cancel Booking</a></td>
 							</tr>
 						</tbody>
 					</table>
